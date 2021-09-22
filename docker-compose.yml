@@ -79,41 +79,50 @@ services:
       - USERS_SERVICE_URL=http://user_service:4001/graphql
       - POSTS_SERVICE_URL=http://posts_service:4000/graphql
     command: npm start
-  # subscription_service:
-  #   container_name: subscription_service
-  #   restart: always
-  #   build:
-  #     context: ./subscription-service
-  #   ports:
-  #     - 5000:5000
-  #   networks:
-  #     - federation
-  #   volumes:
-  #     - ./subscription-service:/home/node/app
-  #     - /home/node/app/node_modules
-  #   depends_on:
-  #     - redis
-  #     - gateway_service
-  #   env_file:
-  #     - ./subscription-service/.env
-  #   environment:
-  #     - REDIS_HOST=redis
-  #     - REDIS_PORT=6379  
-  #   command: npm start
-  # react_app:
-  #   container_name: react_app
-  #   restart: always
-  #   build:
-  #     context: ./react-app
-  #   volumes:
-  #     - ./react-app:/usr/src/app
-  #     - /usr/src/app/node_modules
-  #   env_file:
-  #     - ./react-app/.env
-  #   ports:
-  #     - 3000:3000
-  #   stdin_open: true
-  #   command: npm start
+  subscription_service:
+    container_name: subscription_service
+    restart: always
+    build:
+      context: ./subscription-service
+    ports:
+      - 5000:5000
+    networks:
+      - federation
+    volumes:
+      - ./subscription-service:/home/node/app
+      - /home/node/app/node_modules
+    depends_on:
+      - redis
+      - gateway_service
+    env_file:
+      - ./subscription-service/.env
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379  
+    command: npm start
+  react_app:
+    container_name: react_app
+    restart: always
+    build:
+      context: ./react-app
+    volumes:
+      - ./react-app:/usr/src/app
+      - /usr/src/app/node_modules
+    depends_on:
+      - redis
+      - gateway_service
+      - subscription_service
+    env_file:
+      - ./react-app/.env
+    environment:
+      - REACT_APP_GATEWAY_API_URL=http://gateway_service:4002
+      - REACT_APP_SUBSCRIPTIONS_API_URL=ws://subscription_service:5000/graphql
+    ports:
+      - 3000:3000
+    networks:
+      - federation
+    stdin_open: true
+    command: npm start
 networks:
   federation:
     name: federation

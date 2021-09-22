@@ -11,7 +11,7 @@ COPY package.json /app/package.json
 RUN npm install
 
 # Our app will run on port 9000
-EXPOSE 4001
+EXPOSE 5000
 
 # Start an apollo server at port 9000
 # CMD ["npm", "run", "start:dev"]
