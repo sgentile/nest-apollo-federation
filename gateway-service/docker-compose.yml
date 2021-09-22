@@ -6,10 +6,10 @@ services:
     restart: always
     build:
       context: .
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     ports:
-      - 4000:4000
-      - 4001:4001
+      # - 4000:4000
+      # - 4001:4001
       - 4002:4002
     volumes:
       - .:/app

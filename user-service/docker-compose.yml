@@ -6,7 +6,7 @@ services:
     restart: always
     build:
       context: .
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     ports:
       - 4001:4001
     volumes:
