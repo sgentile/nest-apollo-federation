@@ -23,6 +23,11 @@ export class PostResolvers {
     return this.postService.post(args);
   }
 
+  @ResolveField('user')
+  getUser(@Parent() post: Post) {
+    return { __typename: 'User', id: post.userId };
+  }
+
   @Mutation('createPost')
   async create(@Args('input') args: NewPost) {
     return this.postService.createPost(args);

@@ -16,4 +16,5 @@ model Post {
   content   String
   published Boolean  @default(false)
   createdAt DateTime @default(now())
+  userId    Int
 }

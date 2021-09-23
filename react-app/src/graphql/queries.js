@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-import { PostFields } from "./fragments";
+import { PostFields, UserFields } from "./fragments";
 
 export const GetPosts = gql`
   query GetPosts {
@@ -9,4 +9,13 @@ export const GetPosts = gql`
     }
   }
   ${PostFields}
+`;
+
+export const GetUsers = gql`
+  query GetUsers {
+    users {
+      ...UserFields
+    }
+  }
+  ${UserFields}
 `;

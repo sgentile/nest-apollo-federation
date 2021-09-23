@@ -10,6 +10,7 @@
 export class NewPost {
     title: string;
     content: string;
+    userId: number;
 }
 
 export class Post {
@@ -18,6 +19,7 @@ export class Post {
     content: string;
     published: boolean;
     createdAt: string;
+    userId: number;
 }
 
 export abstract class IQuery {

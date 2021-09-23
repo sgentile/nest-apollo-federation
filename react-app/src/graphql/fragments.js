@@ -20,5 +20,13 @@ export const PostFields = gql`
     content
     published
     createdAt
+    userId
+  }
+`;
+
+export const UserFields = gql`
+  fragment UserFields on User {
+    id
+    name
   }
 `;

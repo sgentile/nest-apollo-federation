@@ -4,11 +4,13 @@ type Post {
   content: String!
   published: Boolean!
   createdAt: String!
+  userId: Int!
 }
 
 input NewPost {
   title: String!
   content: String!
+  userId: Int!
 }
 
 # type Mutation {

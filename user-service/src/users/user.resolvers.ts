@@ -5,6 +5,7 @@ import {
   Args,
   Parent,
   ResolveField,
+  ResolveReference,
 } from '@nestjs/graphql';
 import { UserService } from './user.service';
 import { NewUser, User, UpdateUser } from 'src/graphql';
@@ -21,6 +22,11 @@ export class UserResolvers {
   @Query('user')
   async post(@Args('id') args: string) {
     return this.userService.User(args);
+  }
+
+  @ResolveReference()
+  resolveReference(reference: { __typename: string; id: string }) {
+    return this.userService.User(reference.id);
   }
 
   @Mutation('createUser')

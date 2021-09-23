@@ -10,6 +10,7 @@
 export class NewPost {
     title: string;
     content: string;
+    userId: number;
 }
 
 export class UpdatePost {
@@ -33,12 +34,19 @@ export class Post {
     content: string;
     published: boolean;
     createdAt: string;
+    userId: number;
+    user: User;
 }
 
 export abstract class IQuery {
     abstract posts(): Post[] | Promise<Post[]>;
 
     abstract post(id: string): Nullable<Post> | Promise<Nullable<Post>>;
+}
+
+export class User {
+    id: string;
+    posts?: Nullable<Nullable<Post>[]>;
 }
 
 type Nullable<T> = T | null;

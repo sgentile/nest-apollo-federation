@@ -3,11 +3,12 @@ import { useQuery } from "@apollo/client";
 // import moment from "moment";
 import React, { useEffect } from "react";
 
-import { GetPosts } from "../graphql/queries";
+import { GetPosts, GetUsers } from "../graphql/queries";
 import { postAdded } from "../graphql/subscriptions";
 
 function Home() {
   const { data, loading, subscribeToMore } = useQuery(GetPosts);
+  const { data: userData, loading: loadingUsers } = useQuery(GetUsers);
 
   useEffect(() => {
     const unsubscribe = subscribeToMore({
@@ -25,7 +26,7 @@ function Home() {
     return () => unsubscribe();
   }, [subscribeToMore]);
 
-  if (loading) {
+  if (loading || loadingUsers) {
     return <p>Loading...</p>;
   }
 
@@ -36,6 +37,7 @@ function Home() {
           <Link to="/post/add">Add a Post</Link>
         </p>
       </nav>
+      <div>User Count: {userData?.users?.length || 0}</div>
       {data?.posts?.length ? (
         [...data.posts]
           .filter((post) => post !== null)
@@ -51,7 +53,7 @@ function Home() {
           //     <p>{content}</p>
           //   </article>
           // ))
-          .map(({ id, title, content, published, createdAt }) => (
+          .map(({ id, title, content, userId, createdAt }) => (
             <article key={id}>
               <h1>{title}</h1>
               <p>Post ID: {id}</p>
@@ -62,6 +64,8 @@ function Home() {
                 {new Date(parseInt(createdAt)).toDateString()}
                 {" at "}
                 {new Date(parseInt(createdAt)).toLocaleTimeString()}
+                {" by "}
+                {userId}
               </p>
               <p>Post Content: {content}</p>
             </article>

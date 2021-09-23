@@ -24,15 +24,15 @@ export abstract class IMutation {
     abstract deleteUser(id: string): Nullable<User> | Promise<Nullable<User>>;
 }
 
+export class User {
+    id: string;
+    name: string;
+}
+
 export abstract class IQuery {
     abstract users(): User[] | Promise<User[]>;
 
     abstract user(id: string): Nullable<User> | Promise<Nullable<User>>;
-}
-
-export class User {
-    id: string;
-    name: string;
 }
 
 type Nullable<T> = T | null;

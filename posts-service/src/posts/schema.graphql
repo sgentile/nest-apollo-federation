@@ -1,14 +1,17 @@
-type Post {
+type Post @key(fields: "id") {
   id: ID!
   title: String!
   content: String!
   published: Boolean!
   createdAt: String!
+  userId: Int!
+  user: User!
 }
 
 input NewPost {
   title: String!
   content: String!
+  userId: Int!
 }
 
 input UpdatePost {
@@ -18,7 +21,7 @@ input UpdatePost {
   content: String
 }
 
-type Query {
+extend type Query {
   posts: [Post!]!
   post(id: ID!): Post
 }
@@ -27,4 +30,9 @@ type Mutation {
   createPost(input: NewPost): Post!
   updatePost(input: UpdatePost): Post
   deletePost(id: ID!): Post
+}
+
+extend type User @key(fields: "id") {
+  id: ID! @external
+  posts: [Post]
 }
