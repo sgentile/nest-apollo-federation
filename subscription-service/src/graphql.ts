@@ -19,7 +19,7 @@ export class Post {
     content: string;
     published: boolean;
     createdAt: string;
-    userId: number;
+    user: User;
 }
 
 export abstract class IQuery {
@@ -28,6 +28,11 @@ export abstract class IQuery {
 
 export abstract class ISubscription {
     abstract postAdded(): Post | Promise<Post>;
+}
+
+export class User {
+    id: string;
+    name: string;
 }
 
 type Nullable<T> = T | null;

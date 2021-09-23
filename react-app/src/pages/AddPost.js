@@ -32,7 +32,7 @@ function AddPost() {
           event.preventDefault();
           setCompletedMessage("");
           // addPost({ variables: { authorID: 1, content, title } });
-          addPost({ variables: { content, title } });
+          addPost({ variables: { content, title, userId: 1 } }); // just for demo purposes
         }}
       >
         <div style={{ marginBottom: "1rem" }}>

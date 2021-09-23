@@ -13,8 +13,8 @@ export const PUB_SUB = 'PUB_SUB';
       useFactory: (configService: ConfigService) =>
         new RedisPubSub({
           connection: {
-            host: configService.get('REDIS_HOST') || '127.0.0.1',
-            port: configService.get('REDIS_PORT') || 6380,
+            host: configService.get('REDIS_HOST'),
+            port: configService.get('REDIS_PORT'),
           },
         }),
       inject: [ConfigService],

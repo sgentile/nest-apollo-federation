@@ -4,6 +4,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PostModule } from './posts/posts.module';
 import { PubSubModule } from './pubsub/pubsub.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { PubSubModule } from './pubsub/pubsub.module';
       // },
       installSubscriptionHandlers: true,
     }),
+    ConfigModule.forRoot(),
   ],
   controllers: [AppController],
   providers: [AppService],

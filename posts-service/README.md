@@ -51,6 +51,7 @@ query GetPost{
       title
       content
       published
+      createdAt
     }
 }
 ```

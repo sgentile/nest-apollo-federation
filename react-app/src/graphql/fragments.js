@@ -13,6 +13,13 @@ import { gql } from "@apollo/client";
 //   }
 // `;
 
+export const UserFields = gql`
+  fragment UserFields on User {
+    id
+    name
+  }
+`;
+
 export const PostFields = gql`
   fragment PostFields on Post {
     id
@@ -20,13 +27,9 @@ export const PostFields = gql`
     content
     published
     createdAt
-    userId
+    user {
+      ...UserFields
+    }
   }
-`;
-
-export const UserFields = gql`
-  fragment UserFields on User {
-    id
-    name
-  }
+  ${UserFields}
 `;

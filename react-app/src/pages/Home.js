@@ -14,6 +14,7 @@ function Home() {
     const unsubscribe = subscribeToMore({
       document: postAdded,
       updateQuery: (prev, { subscriptionData }) => {
+        debugger;
         console.log("subscribers", subscriptionData);
         if (!subscriptionData.data) {
           return prev;
@@ -23,7 +24,7 @@ function Home() {
         };
       },
     });
-    return () => unsubscribe();
+    return () => unsubscribe && unsubscribe();
   }, [subscribeToMore]);
 
   if (loading || loadingUsers) {
@@ -53,7 +54,7 @@ function Home() {
           //     <p>{content}</p>
           //   </article>
           // ))
-          .map(({ id, title, content, userId, createdAt }) => (
+          .map(({ id, title, content, user, createdAt }) => (
             <article key={id}>
               <h1>{title}</h1>
               <p>Post ID: {id}</p>
@@ -65,9 +66,11 @@ function Home() {
                 {" at "}
                 {new Date(parseInt(createdAt)).toLocaleTimeString()}
                 {" by "}
-                {userId}
+                {user.name}
               </p>
-              <p>Post Content: {content}</p>
+              <div>
+                Post Content: <div>{content}</div>
+              </div>
             </article>
           ))
       ) : (

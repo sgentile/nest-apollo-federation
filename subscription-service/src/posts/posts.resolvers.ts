@@ -1,38 +1,50 @@
 import { Inject } from '@nestjs/common';
-import { Resolver, Subscription, Query, Mutation, Args } from '@nestjs/graphql';
+import { Resolver, Subscription, Query } from '@nestjs/graphql';
 import { RedisPubSub } from 'graphql-redis-subscriptions';
-import { NewPost, Post } from 'src/graphql';
+import { Post } from 'src/graphql';
 import { PUB_SUB } from 'src/pubsub/pubsub.module';
+import { request, gql } from 'graphql-request';
+import { ConfigService } from '@nestjs/config';
 
 const POST_ADDED_EVENT = 'postAdded';
 
 @Resolver('Post')
 export class PostResolvers {
-  constructor(@Inject(PUB_SUB) private pubSub: RedisPubSub) {}
+  getPostQuery = gql`
+    query GetPost($id: ID!) {
+      post(id: $id) {
+        id
+        title
+        content
+        published
+        createdAt
+        user {
+          id
+          name
+        }
+      }
+    }
+  `;
 
-  // @Query()
-  // async author(@Args('id') id: number) {
-  //   return this.authorsService.findOneById(id);
-  // }
+  constructor(
+    @Inject(PUB_SUB) private pubSub: RedisPubSub,
+    private configService: ConfigService,
+  ) {}
+
   @Query()
   test(): string {
     return 'hello world';
   }
 
-  // @Mutation('createPost')
-  // async createPost(@Args('input') args: NewPost): Promise<Post> {
-  //   const post = {
-  //     id: '100000',
-  //     title: args.title,
-  //     content: args.content,
-  //     published: false,
-  //     createdAt: new Date().valueOf().toString(),
-  //   } as Post;
-  //   this.pubSub.publish(POST_ADDED_EVENT, { postAdded: post });
-  //   return post;
-  // }
-
-  @Subscription((returns) => Post)
+  @Subscription(POST_ADDED_EVENT, {
+    async resolve(this: PostResolvers, value) {
+      const endpoint = this.configService.get('GATEWAY_API_URL');
+      const data = await request(endpoint, this.getPostQuery, {
+        id: value.postAdded.id,
+      });
+      return data.post;
+    },
+  })
   postAdded() {
     return this.pubSub.asyncIterator(POST_ADDED_EVENT);
   }

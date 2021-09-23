@@ -41,6 +41,7 @@
     "apollo-server-express": "^3.3.0",
     "graphql": "^15.6.0",
     "graphql-redis-subscriptions": "^2.4.0",
+    "graphql-request": "^3.5.0",
     "graphql-tools": "^8.2.0",
     "graphql-ws": "^5.5.0",
     "pg": "^8.7.1",
