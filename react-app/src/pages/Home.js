@@ -14,13 +14,12 @@ function Home() {
     const unsubscribe = subscribeToMore({
       document: postAdded,
       updateQuery: (prev, { subscriptionData }) => {
-        debugger;
         console.log("subscribers", subscriptionData);
         if (!subscriptionData.data) {
           return prev;
         }
         return {
-          posts: [...prev.posts, subscriptionData.data.postAdded],
+          posts: [subscriptionData.data.postAdded, ...prev.posts],
         };
       },
     });
@@ -43,7 +42,10 @@ function Home() {
         [...data.posts]
           .filter((post) => post !== null)
           .sort((a, b) =>
-            Date.parse(b.publishedAt) > Date.parse(a.publishedAt) ? 1 : -1
+            Date.parse(parseInt(b.createdAt)) >
+            Date.parse(parseInt(a.createdAt))
+              ? 1
+              : -1
           )
           // .map(({ author, content, id, title, publishedAt }) => (
           //   <article key={id}>
