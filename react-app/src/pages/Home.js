@@ -19,7 +19,7 @@ function Home() {
           return prev;
         }
         return {
-          posts: [subscriptionData.data.postAdded, ...prev.posts],
+          posts: [...prev.posts, subscriptionData.data.postAdded],
         };
       },
     });
