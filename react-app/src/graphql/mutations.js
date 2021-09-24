@@ -1,21 +1,17 @@
 import { gql } from "@apollo/client";
 
-import { PostFields } from "./fragments";
-
-// export const AddPost = gql`
-//   mutation AddPost($authorID: ID!, $content: String!, $title: String!) {
-//     addPost(authorID: $authorID, content: $content, title: $title) {
-//       ...PostFields
-//     }
-//   }
-//   ${PostFields}
-// `;
-
 export const AddPost = gql`
-  mutation AddPost($content: String!, $title: String!, $userId: Number!) {
-    createPost(input: { content: $content, title: $title, userId: $userId }) {
-      ...PostFields
+  mutation generatePost($title: String!, $content: String!, $userId: Int!) {
+    createPost(input: { title: $title, content: $content, userId: 1 }) {
+      id
+      title
+      content
+      published
+      createdAt
+      user {
+        id
+        name
+      }
     }
   }
-  ${PostFields}
 `;

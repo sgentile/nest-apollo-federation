@@ -65,6 +65,10 @@ function AddPost() {
           </p>
         )}
       </form>
+
+      <footer>
+        (note: userId is currently hard coded to 1 for prototyping purposes)
+      </footer>
     </div>
   );
 }

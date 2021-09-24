@@ -47,7 +47,7 @@ class BuildServiceModule {}
             { name: 'posts', url: process.env.POSTS_SERVICE_URL },
             { name: 'users', url: process.env.USERS_SERVICE_URL },
           ],
-          // debug: true,
+          debug: true,
           serviceHealthCheck: true,
           buildService({ name, url }) {
             console.log(name, url);

@@ -1,12 +1,17 @@
 import { gql } from "@apollo/client";
 
-import { PostFields } from "./fragments";
-
 export const postAdded = gql`
   subscription postAdded {
     postAdded {
-      ...PostFields
+      id
+      title
+      content
+      published
+      createdAt
+      user {
+        id
+        name
+      }
     }
   }
-  ${PostFields}
 `;

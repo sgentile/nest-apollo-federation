@@ -7,7 +7,9 @@ import { GetPosts, GetUsers } from "../graphql/queries";
 import { postAdded } from "../graphql/subscriptions";
 
 function Home() {
-  const { data, loading, subscribeToMore } = useQuery(GetPosts);
+  const { data, loading, subscribeToMore } = useQuery(GetPosts, {
+    fetchPolicy: "network-only",
+  });
   const { data: userData, loading: loadingUsers } = useQuery(GetUsers);
 
   useEffect(() => {
@@ -34,7 +36,14 @@ function Home() {
     <div>
       <nav>
         <p>
-          <Link to="/post/add">Add a Post</Link>
+          {userData?.users?.length ? (
+            <Link to="/post/add">Add a Post</Link>
+          ) : (
+            <p>
+              No User Available - generate a default user in playground - see
+              README
+            </p>
+          )}
         </p>
       </nav>
       <div>User Count: {userData?.users?.length || 0}</div>
