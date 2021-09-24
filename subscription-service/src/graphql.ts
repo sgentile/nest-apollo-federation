@@ -19,7 +19,8 @@ export class Post {
     content: string;
     published: boolean;
     createdAt: string;
-    user: User;
+    user?: Nullable<User>;
+    userId?: Nullable<number>;
 }
 
 export abstract class IQuery {
