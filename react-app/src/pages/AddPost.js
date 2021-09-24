@@ -27,6 +27,9 @@ function AddPost() {
         </p>
       </nav>
       <h1>Add a New Post</h1>
+      <h3>
+        <i>For Demo Purposes - user hard coded to 1</i>
+      </h3>
       <form
         onSubmit={(event) => {
           event.preventDefault();
