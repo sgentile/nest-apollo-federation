@@ -1,15 +1,25 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
-import { User } from '@prisma/client';
+import { Prisma, User } from '@prisma/client';
 import { NewUser, UpdateUser } from 'src/graphql';
 
 @Injectable()
 export class UserService {
   constructor(private prisma: PrismaService) {}
 
+  // data loader
+  async getUsersByIds(ids: readonly string[]): Promise<User[] | null> {
+    console.log(`Getting users with ids (${ids.join(',')})`);
+    const result = await this.prisma.user.findMany({});
+    // const result = await this.prisma.$queryRaw<User[]>(
+    //   Prisma.sql`SELECT * FROM User WHERE id IN (${ids})`,
+    // );
+    return result;
+  }
+
   // Get a single User
   async User(id: string): Promise<User | null> {
-    return this.prisma.user.findUnique({
+    return await this.prisma.user.findUnique({
       where: {
         id: parseInt(id),
       },

@@ -3,30 +3,36 @@ import {
   Query,
   Mutation,
   Args,
-  Parent,
-  ResolveField,
   ResolveReference,
+  Context,
 } from '@nestjs/graphql';
 import { UserService } from './user.service';
 import { NewUser, User, UpdateUser } from 'src/graphql';
+import UserDataLoader from './user.dataloader';
 
 @Resolver('User')
 export class UserResolvers {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly userDataLoader: UserDataLoader,
+  ) {}
 
   @Query('users')
   async posts() {
+    console.log('Getting Posts');
     return this.userService.Users();
   }
 
   @Query('user')
-  async post(@Args('id') args: string) {
-    return this.userService.User(args);
+  async post(@Args('id') userId: string) {
+    return this.userService.User(userId);
   }
 
   @ResolveReference()
-  resolveReference(reference: { __typename: string; id: string }) {
-    return this.userService.User(reference.id);
+  async resolveReference(reference: { __typename: string; id: string }) {
+    // const user = await this.userService.User(reference.id);
+    const user = await this.userDataLoader.batchUsers.load(reference.id);
+    return user;
   }
 
   @Mutation('createUser')

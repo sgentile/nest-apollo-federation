@@ -45,3 +45,5 @@ lerna-debug.log*
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+posts-service/prisma/dev.db
+user-service/prisma/dev.db

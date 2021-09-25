@@ -38,6 +38,7 @@
     "@nestjs/typeorm": "^8.0.2",
     "@prisma/client": "^3.0.2",
     "apollo-server-express": "^3.3.0",
+    "dataloader": "^2.0.0",
     "graphql": "^15.6.0",
     "graphql-tools": "^8.2.0",
     "pg": "^8.7.1",
