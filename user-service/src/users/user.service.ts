@@ -8,12 +8,13 @@ export class UserService {
   constructor(private prisma: PrismaService) {}
 
   // data loader
-  async getUsersByIds(ids: readonly string[]): Promise<User[] | null> {
-    console.log(`Getting users with ids (${ids.join(',')})`);
-    const result = await this.prisma.user.findMany({});
-    // const result = await this.prisma.$queryRaw<User[]>(
-    //   Prisma.sql`SELECT * FROM User WHERE id IN (${ids})`,
-    // );
+  async getUsersByIds(ids: Array<string>): Promise<User[] | null> {
+    console.log(`Getting user with id (${ids.join(',')})`);
+    const result = await this.prisma.user.findMany({
+      where: {
+        id: { in: ids.map((i) => parseInt(i)) },
+      },
+    });
     return result;
   }
 
