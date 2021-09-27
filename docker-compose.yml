@@ -33,7 +33,7 @@ services:
       - redis
     env_file:
       - ./user-service/.env
-    command: npm run start:dev
+    command: npm run start
   posts_service:
     container_name: posts_service
     restart: always
@@ -57,7 +57,7 @@ services:
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379   
-    command: npm run start:dev
+    command: npm run start
   gateway_service:
     container_name: gateway_service
     restart: always
