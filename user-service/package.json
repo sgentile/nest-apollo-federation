@@ -5,11 +5,14 @@
   "author": "",
   "private": true,
   "license": "UNLICENSED",
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  },
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "npm run migrate && nest start",
+    "start": "npm run prisma && nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
@@ -23,7 +26,7 @@
     "migrate": "prisma migrate dev",
     "deploy": "prisma migrate deploy",
     "reset": "prisma migrate reset",
-    "seed": "prisma db seed --preview-feature",
+    "seed": "prisma db seed",
     "studio": "prisma studio",
     "prisma": "prisma format && npm run migrate && npm run seed",
     "generate-types": "ts-node src/generate-typings.ts"
