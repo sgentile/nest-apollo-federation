@@ -56,21 +56,10 @@ function Home() {
               ? 1
               : -1
           )
-          // .map(({ author, content, id, title, publishedAt }) => (
-          //   <article key={id}>
-          //     <h1>{title}</h1>
-          //     <p>Post ID: {id}</p>
-          //     <p>By {author.name}</p>
-          //     <p>{moment(publishedAt).format("h:mm A MMM D, YYYY")}</p>
-          //     <p>{content}</p>
-          //   </article>
-          // ))
           .map(({ id, title, content, user, createdAt }) => (
             <article key={id}>
               <h1>{title}</h1>
               <p>Post ID: {id}</p>
-              {/* <p>By {author.name}</p> */}
-              {/* <p>{moment(createdAt).format("h:mm A MMM D, YYYY")}</p> */}
               <p>
                 Post Date:
                 {new Date(parseInt(createdAt)).toDateString()}
