@@ -10,6 +10,16 @@ generator client {
   provider = "prisma-client-js"
 }
 
+// generator nestjs {
+//   provider                = "nestjs-prisma-graphql"
+//   prismaServiceImportPath = "src/prisma.service"
+// }
+
+// generator nestgraphql {
+//     provider = "node node_modules/prisma-nestjs-graphql"
+//     output = "../src/@generated"
+// }
+
 model Post {
   id        Int      @id @default(autoincrement())
   title     String

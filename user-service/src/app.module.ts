@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { GraphQLFederationModule, GraphQLModule } from '@nestjs/graphql';
+import { GraphQLFederationModule } from '@nestjs/graphql';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from './users/users.module';
