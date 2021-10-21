@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/prisma.service';
-import { Prisma, User } from '@prisma/client';
 import { NewUser, UpdateUser } from 'src/graphql';
+import { PrismaService } from 'src/prisma.service';
+
+import { Injectable } from '@nestjs/common';
+import { Prisma, User } from '@prisma/client';
 
 @Injectable()
 export class UserService {
@@ -19,7 +20,7 @@ export class UserService {
   }
 
   // Get a single User
-  async User(id: string): Promise<User | null> {
+  async user(id: string): Promise<User | null> {
     return await this.prisma.user.findUnique({
       where: {
         id: parseInt(id),
@@ -28,13 +29,13 @@ export class UserService {
   }
 
   // Get multiple Users
-  async Users(): Promise<User[]> {
-    return this.prisma.user.findMany({});
+  async users(): Promise<User[]> {
+    return await this.prisma.user.findMany({});
   }
 
   // Create a User
   async createUser(input: NewUser): Promise<User> {
-    return this.prisma.user.create({
+    return await this.prisma.user.create({
       data: input,
     });
   }
@@ -42,7 +43,7 @@ export class UserService {
   // Update a User
   async updateUser(params: UpdateUser): Promise<User> {
     const { id, name } = params;
-    return this.prisma.user.update({
+    return await this.prisma.user.update({
       where: {
         id: parseInt(id),
       },
@@ -54,7 +55,7 @@ export class UserService {
 
   // delete a User
   async deleteUser(id: string): Promise<User> {
-    return this.prisma.user.delete({
+    return await this.prisma.user.delete({
       where: {
         id: parseInt(id),
       },

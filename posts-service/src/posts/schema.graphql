@@ -4,8 +4,8 @@ type Post @key(fields: "id") {
   content: String!
   published: Boolean!
   createdAt: String!
-  userId: Int
-  user: User
+  userId: Int!
+  user: User!
 }
 
 input NewPost {
