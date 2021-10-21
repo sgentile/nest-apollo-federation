@@ -53,5 +53,12 @@ down:
 up:
 	docker-compose up
 
+up-d:
+	docker-compose up -d
+
+restart:
+	docker-compose down
+	docker-compose up -d
+
 redis:
 	docker-compose up redis -d

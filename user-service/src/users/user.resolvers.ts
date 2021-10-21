@@ -1,14 +1,11 @@
+import { NewUser, UpdateUser, User } from 'src/graphql';
+
 import {
-  Resolver,
-  Query,
-  Mutation,
-  Args,
-  ResolveReference,
-  Context,
+    Args, Mutation, Parent, Query, ResolveField, Resolver, ResolveReference
 } from '@nestjs/graphql';
-import { UserService } from './user.service';
-import { NewUser, User, UpdateUser } from 'src/graphql';
+
 import UserDataLoader from './user.dataloader';
+import { UserService } from './user.service';
 
 @Resolver('User')
 export class UserResolvers {
@@ -18,14 +15,14 @@ export class UserResolvers {
   ) {}
 
   @Query('users')
-  async posts() {
-    console.log('Getting Posts');
-    return this.userService.Users();
+  async users() {
+    console.log('Getting Users');
+    return await this.userService.users();
   }
 
   @Query('user')
-  async post(@Args('id') userId: string) {
-    return this.userService.User(userId);
+  async user(@Args('id') userId: string) {
+    return await this.userService.user(userId);
   }
 
   @ResolveReference()
@@ -37,16 +34,16 @@ export class UserResolvers {
 
   @Mutation('createUser')
   async create(@Args('input') args: NewUser) {
-    return this.userService.createUser(args);
+    return await this.userService.createUser(args);
   }
 
   @Mutation('updateUser')
   async update(@Args('input') args: UpdateUser) {
-    return this.userService.updateUser(args);
+    return await this.userService.updateUser(args);
   }
 
   @Mutation('deleteUser')
   async delete(@Args('id') args: string) {
-    return this.userService.deleteUser(args);
+    return await this.userService.deleteUser(args);
   }
 }
