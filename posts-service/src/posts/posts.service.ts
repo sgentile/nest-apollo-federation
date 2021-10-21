@@ -14,17 +14,6 @@ export class PostService {
     private prisma: PrismaService,
   ) {}
 
-  // data loader
-  async getPostsByIds(ids: Array<string>): Promise<Post[] | null> {
-    console.log(`Getting user with id (${ids.join(',')})`);
-    const result = await this.prisma.post.findMany({
-      where: {
-        id: { in: ids.map((i) => parseInt(i)) },
-      },
-    });
-    return result;
-  }
-
   // Get a single post
   async post(id: string): Promise<Post | null> {
     return await this.prisma.post.findUnique({
@@ -35,8 +24,8 @@ export class PostService {
   }
 
   // Get multiple posts
-  async posts(criteria = {}): Promise<Post[]> {
-    return await this.prisma.post.findMany(criteria);
+  async posts(): Promise<Post[]> {
+    return await this.prisma.post.findMany({});
   }
 
   // Create a post
@@ -71,5 +60,27 @@ export class PostService {
         id: parseInt(id),
       },
     });
+  }
+
+  // data loader
+  async getPostsByIds(ids: Array<string>): Promise<Post[] | null> {
+    console.log(`Getting user with id (${ids.join(',')})`);
+    const result = await this.prisma.post.findMany({
+      where: {
+        id: { in: ids.map((i) => parseInt(i)) },
+      },
+    });
+    return result;
+  }
+
+  // data loader
+  async getUsersPosts(ids: Array<string>): Promise<Post[] | null> {
+    console.log(`Getting users posts with ids (${ids.join(',')})`);
+    const result = await this.prisma.post.findMany({
+      where: {
+        userId: { in: ids.map((i) => parseInt(i)) },
+      },
+    });
+    return result;
   }
 }

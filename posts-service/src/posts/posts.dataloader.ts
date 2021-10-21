@@ -13,4 +13,12 @@ export default class PostDataLoader {
     const postsMap = new Map(posts.map((post) => [post.id, post]));
     return ids.map((postId) => postsMap.get(parseInt(postId)));
   });
+
+  public readonly batchUserPosts = new DataLoader(async (ids: string[]) => {
+    const posts = await this.postService.getUsersPosts(ids);
+    const usersPostsArray = ids.map((userId) =>
+      posts.filter((post) => post.userId === parseInt(userId)),
+    );
+    return usersPostsArray;
+  });
 }

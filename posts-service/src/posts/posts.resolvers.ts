@@ -9,7 +9,10 @@ import { PostService } from './posts.service';
 
 @Resolver('Post')
 export class PostResolvers {
-  constructor(private readonly postService: PostService) {}
+  constructor(
+    private readonly postService: PostService,
+    private readonly postDataLoader: PostDataLoader,
+  ) {}
 
   @Query('posts')
   async posts() {
@@ -29,7 +32,7 @@ export class PostResolvers {
 
   @ResolveReference()
   async resolveReference(reference: { __typename: string; id: string }) {
-    const user = await this.postService.post(reference.id);
+    const user = await this.postDataLoader.batchPosts.load(reference.id);
     return user;
   }
 
@@ -51,25 +54,12 @@ export class PostResolvers {
 
 @Resolver('User')
 export class UserResolvers {
-  constructor(
-    private readonly postService: PostService,
-    private readonly postDataLoader: PostDataLoader,
-  ) {}
+  constructor(private readonly postDataLoader: PostDataLoader) {}
 
   @ResolveField('posts')
   async getPosts(@Parent() user: User) {
     console.log('called resolve posts');
-    const posts = await this.postService.posts({
-      where: { userId: { equals: parseInt(user.id) } },
-    });
-    // const posts = await this.postDataLoader.batchPosts.loadMany([user.id]);
+    const posts = await this.postDataLoader.batchUserPosts.load(user.id);
     return posts;
   }
-
-  // @ResolveField('post')
-  // async getPost(@Parent() user: User) {
-  //   console.log('called resolve post');
-  //   const post = await this.postDataLoader.batchPosts.load(user.id);
-  //   return post;
-  // }
 }
